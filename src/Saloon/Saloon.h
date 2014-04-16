@@ -14,6 +14,8 @@
 #include "Debug.h"
 #include "LTimer.h"
 
+#include "SaloonTexture.h"
+
 class Saloon {
 private:
 	GLfloat _camX, _camY;

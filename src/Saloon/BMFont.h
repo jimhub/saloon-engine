@@ -16,7 +16,7 @@ private:
 	std::map<int, BMFontChar> chars;
 
 	int lineHeight;
-	int texWidth, texHeight;
+	GLuint texWidth, texHeight;
 	int tabSize;
 
 	GLuint texture;

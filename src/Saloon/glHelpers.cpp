@@ -53,6 +53,11 @@ void glInit(int screenWidth, int screenHeight) {
 }
 
 GLuint glLoadTexture(const char* fileName, GLuint filterMode) {
+	GLuint t1 = 0, t2 = 0;
+	return glLoadTexture(fileName, t1, t2, filterMode);
+}
+
+GLuint glLoadTexture(const char* fileName, GLuint& width, GLuint& height, GLuint filterMode) {
 	GLuint texture;			// This is a handle to our texture object
 	SDL_Surface *surface;	// This surface will tell us the details of the image
 	GLenum texture_format;
@@ -102,6 +107,9 @@ GLuint glLoadTexture(const char* fileName, GLuint filterMode) {
 		// Edit the texture object's image data using the information SDL_Surface gives us
 		glTexImage2D( GL_TEXTURE_2D, 0, nOfColors, surface->w, surface->h, 0,
 	                      texture_format, GL_UNSIGNED_BYTE, surface->pixels );
+
+		width = surface->w;
+		height = surface->h;
 	}
 	else {
 		printf("SDL could not load %s: %s\n", fileName, SDL_GetError());
@@ -346,4 +354,32 @@ void glDeactivateRenderTarget() {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	glInit2DViewPort(sWidth, sHeight);
+}
+
+GLuint glColorBytesToInt(GLubyte r, GLubyte g, GLubyte b, GLubyte a) {
+	GLuint color;
+	GLubyte* bytes = (GLubyte*)&color;
+
+	bytes[0] = r;
+	bytes[1] = g;
+	bytes[2] = b;
+	bytes[3] = a;
+
+	return color;
+}
+
+GLuint glColorFloatsToInt(GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
+	GLuint color;
+	GLubyte* bytes = (GLubyte*)&color;
+
+	bytes[0] = (GLubyte)(r*255);
+	bytes[1] = (GLubyte)(g*255);
+	bytes[2] = (GLubyte)(b*255);
+	bytes[3] = (GLubyte)(a*255);
+
+	return color;
+}
+
+GLuint glColorToInt(const GLColor4& color) {
+	return glColorFloatsToInt(color.r, color.g, color.b, color.a);
 }

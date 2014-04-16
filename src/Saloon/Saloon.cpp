@@ -119,29 +119,8 @@ int Saloon::start() {
 
 		onCreate();
 
-		_camY = 128;
 
 		while (!quit){
-
-			if(_debugEnabled) {
-				debugStart();
-
-				curTime = SDL_GetTicks();
-
-				deltaTime = (curTime - prevTime) / 1000.0f;
-
-				prevTime = curTime;
-
-				if(fpsTimer.getTicks() >= 1000) {
-					FPS = frames;
-					frames = 0;
-					fpsTimer.reset();
-				}
-
-				frames++;
-
-				debugWatch("FPS", FPS);
-			}
 
 			while (SDL_PollEvent(&e)){
 				if (e.type == SDL_QUIT)
@@ -174,6 +153,26 @@ int Saloon::start() {
 				}
 			}
 
+			if(_debugEnabled) {
+				debugStart();
+
+				curTime = SDL_GetTicks();
+
+				deltaTime = (curTime - prevTime) / 1000.0f;
+
+				prevTime = curTime;
+
+				if(fpsTimer.getTicks() >= 1000) {
+					FPS = frames;
+					frames = 0;
+					fpsTimer.reset();
+				}
+
+				frames++;
+
+				debugWatch("FPS", FPS);
+			}
+
 			onUpdate();
 
 			glClear(GL_COLOR_BUFFER_BIT);
@@ -191,11 +190,6 @@ int Saloon::start() {
 			glScalef(_camZoom, _camZoom, 1.0f);
 			glRotatef(_camAng, 0, 0, 1);
 			glTranslatef(-_camX, _camY, 0);
-
-			//_camY += 16.0f*deltaTime;
-
-			//_camZoom += deltaTime;
-			_camAng += 15.0f*deltaTime;
 
 			onRender();
 

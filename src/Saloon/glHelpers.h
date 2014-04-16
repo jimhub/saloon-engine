@@ -74,6 +74,8 @@ void glDeactivateRenderTarget();
 void glColor4(const GLColor4& color);
 
 GLuint glLoadTexture(const char* fileName, GLuint filterMode=GL_NEAREST);
+GLuint glLoadTexture(const char* fileName, GLuint& width, GLuint& height, GLuint filterMode=GL_NEAREST);
+
 void glDrawTexture(GLuint texture, GLfloat x, GLfloat y, GLfloat w, GLfloat h,
 		GLfloat clipX=0, GLfloat clipY=0, GLfloat clipX1=1, GLfloat clipY1=1);
 void glDrawTexture(GLuint texture, GLfloat x, GLfloat y, GLfloat w, GLfloat h, const GLRectF &clip);
@@ -95,6 +97,10 @@ void glSetStrokeWidth(GLfloat strokeWidth);
 void glSetStrokeAlpha(GLfloat a);
 void glSetStrokeColor(GLfloat r, GLfloat g, GLfloat b);
 void glSetStrokeColorA(GLfloat r, GLfloat g, GLfloat b, GLfloat a);
+
+GLuint glColorBytesToInt(GLubyte r, GLubyte g, GLubyte b, GLubyte a);
+GLuint glColorFloatsToInt(GLfloat r, GLfloat g, GLfloat b, GLfloat a);
+GLuint glColorToInt(const GLColor4& color);
 
 void glPushStyle();
 void glPopStyle();

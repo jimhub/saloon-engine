@@ -32,12 +32,12 @@ BMFont::BMFont(const char* fileName) : tabSize(4) {
 	XMLElement* common = font->FirstChildElement("common");
 
 	lineHeight = common->IntAttribute("lineHeight");
-	texWidth = common->IntAttribute("scaleW");
-	texHeight = common->IntAttribute("scaleH");
+	//texWidth = common->IntAttribute("scaleW");
+	//texHeight = common->IntAttribute("scaleH");
 
 	XMLElement* page = font->FirstChildElement("pages")->FirstChildElement("page");
 
-	texture = glLoadTexture(page->Attribute("file"), GL_LINEAR);
+	texture = glLoadTexture(page->Attribute("file"), texWidth, texHeight, GL_LINEAR);
 
 	XMLElement* curChar = font->FirstChildElement("chars")->FirstChildElement("char");
 
