@@ -3,16 +3,16 @@
 #include <sstream>
 
 #include "Saloon/Saloon.h"
-#include "Saloon/SaloonShader.h"
-#include "Saloon/SaloonMesh.h"
+#include "Saloon/Shader.h"
+#include "Saloon/Mesh.h"
 #include "Saloon/Transform.h"
 
 class MyGame : public Saloon {
 private:
 
-	SaloonShader shader;
-	SaloonMesh* mesh;
-	SaloonTexture texture;
+	Shader shader;
+	Mesh mesh;
+	Texture texture;
 	Transform transform;
 
 	float counter;
@@ -29,7 +29,7 @@ public:
 
 MyGame::MyGame() : counter(0.0f)
 {
-	mesh = NULL;
+
 }
 
 MyGame::~MyGame() {
@@ -47,14 +47,14 @@ void MyGame::onCreate() {
 			Vertex(glm::vec3(0.5, -0.5, 0), glm::vec2(1, 0))
 		};
 
-	mesh = new SaloonMesh(verts, 3);
+	mesh.createFromVertices(verts, 3);
 
 	texture.loadTexture("bricks.jpg");
 }
 
 void MyGame::onUpdate() {
-	counter += 1.0f * deltaTime;
-	transform.getPos().x = sinf(counter);
+	counter += 45.0f * deltaTime;
+	transform.getRotation().y = counter;
 }
 
 void MyGame::onRender() {
@@ -63,14 +63,14 @@ void MyGame::onRender() {
 	shader.bind();
 	texture.bind();
 	shader.update(transform);
-	mesh->draw();
+	mesh.draw();
 	texture.unbind();
 	shader.unbind();
 	//glEnable(GL_TEXTURE_2D);
 }
 
 void MyGame::onDestroy() {
-	delete mesh;
+
 }
 
 int main(int argc, char **argv) {

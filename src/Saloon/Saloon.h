@@ -15,7 +15,7 @@
 #include "LTimer.h"
 
 #include "SaloonHelpers.h"
-#include "SaloonTexture.h"
+#include "Texture.h"
 
 class Saloon {
 private:

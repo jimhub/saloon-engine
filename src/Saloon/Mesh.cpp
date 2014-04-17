@@ -1,11 +1,11 @@
 /*
- * SaloonMesh.cpp
+ * Mesh.cpp
  *
  *  Created on: Apr 16, 2014
  *      Author: james
  */
 
-#include "SaloonMesh.h"
+#include "Mesh.h"
 #include <vector>
 
 Vertex::Vertex(const glm::vec3& pos, const glm::vec2& texCoord) {
@@ -14,7 +14,34 @@ Vertex::Vertex(const glm::vec3& pos, const glm::vec2& texCoord) {
 }
 
 
-SaloonMesh::SaloonMesh(Vertex* verts, uint numVerts) {
+Mesh::Mesh() {
+	_drawCount = 0;
+	_vertexArrayObject = 0;
+}
+
+
+Mesh::~Mesh() {
+	free();
+}
+
+void Mesh::free() {
+	if(_vertexArrayObject != 0) {
+		glDeleteVertexArrays(1, &_vertexArrayObject);
+		_vertexArrayObject = 0;
+		_drawCount = 0;
+	}
+}
+
+void Mesh::draw() {
+	glBindVertexArray(_vertexArrayObject);
+
+	glDrawArrays(GL_TRIANGLES, 0, _drawCount);
+
+	glBindVertexArray(0);
+}
+
+
+void Mesh::createFromVertices(Vertex* verts, uint numVerts) {
 	_drawCount = numVerts;
 
 	glGenVertexArrays(1, &_vertexArrayObject);
@@ -47,18 +74,6 @@ SaloonMesh::SaloonMesh(Vertex* verts, uint numVerts) {
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
-
-	glBindVertexArray(0);
-}
-
-SaloonMesh::~SaloonMesh() {
-	glDeleteVertexArrays(1, &_vertexArrayObject);
-}
-
-void SaloonMesh::draw() {
-	glBindVertexArray(_vertexArrayObject);
-
-	glDrawArrays(GL_TRIANGLES, 0, _drawCount);
 
 	glBindVertexArray(0);
 }

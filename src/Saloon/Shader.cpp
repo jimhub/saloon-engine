@@ -5,10 +5,10 @@
  *      Author: james
  */
 
-#include "SaloonShader.h"
+#include "Shader.h"
 #include <glm/glm.hpp>
 
-SaloonShader::SaloonShader() :
+Shader::Shader() :
 	_program(0)
 {
 	for(uint i = 0; i < NUM_SHADERS; i++) {
@@ -16,7 +16,7 @@ SaloonShader::SaloonShader() :
 	}
 }
 
-SaloonShader::~SaloonShader() {
+Shader::~Shader() {
 
 	if(_program != 0) {
 		for(uint i = 0; i < NUM_SHADERS; i++) {
@@ -30,7 +30,7 @@ SaloonShader::~SaloonShader() {
 	}
 }
 
-void SaloonShader::load(const string& fileName) {
+void Shader::load(const string& fileName) {
 	_program = glCreateProgram();
 
 	_shaders[0] = glCreateShaderFromText(readTextFile(fileName + ".vs"), GL_VERTEX_SHADER);
@@ -53,16 +53,16 @@ void SaloonShader::load(const string& fileName) {
 
 }
 
-void SaloonShader::bind() {
+void Shader::bind() {
 	glUseProgram(_program);
 }
 
-void SaloonShader::update(const Transform& transform) {
+void Shader::update(const Transform& transform) {
 	glm::mat4 model = transform.getModel();
 
 	glUniformMatrix4fv(_uniforms[TRANSFORM_U], 1, GL_FALSE, &model[0][0]);
 }
 
-void SaloonShader::unbind() {
+void Shader::unbind() {
 	glUseProgram(0);
 }

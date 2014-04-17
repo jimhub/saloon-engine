@@ -5,9 +5,9 @@
  *      Author: james
  */
 
-#include "SaloonTexture.h"
+#include "Texture.h"
 
-SaloonTexture::SaloonTexture() {
+Texture::Texture() {
 	_texture = 0;
 	_pixels = NULL;
 
@@ -15,11 +15,11 @@ SaloonTexture::SaloonTexture() {
 	_texHeight = 0;
 }
 
-SaloonTexture::~SaloonTexture() {
+Texture::~Texture() {
 	freeTexture();
 }
 
-bool SaloonTexture::lock() {
+bool Texture::lock() {
 	if(_pixels == NULL && _texture != 0) {
 		GLuint size = _texWidth * _texHeight;
 		_pixels = new GLuint[size];
@@ -36,7 +36,7 @@ bool SaloonTexture::lock() {
 	return false;
 }
 
-bool SaloonTexture::unlock() {
+bool Texture::unlock() {
 	if( _pixels != NULL && _texture != 0 )
 	{
 		//Set current texture
@@ -59,11 +59,11 @@ bool SaloonTexture::unlock() {
 	return false;
 }
 
-GLuint SaloonTexture::getPixel(GLuint x, GLuint y) const {
+GLuint Texture::getPixel(GLuint x, GLuint y) const {
 	return _pixels[ y * _texWidth + x ];
 }
 
-void SaloonTexture::freeTexture() {
+void Texture::freeTexture() {
 	if(_texture != 0) {
 		glDeleteTextures(1, &_texture);
 		_texture = 0;
@@ -78,27 +78,27 @@ void SaloonTexture::freeTexture() {
 	_texHeight = 0;
 }
 
-void SaloonTexture::setPixel(GLuint x, GLuint y, GLuint pixel) {
+void Texture::setPixel(GLuint x, GLuint y, GLuint pixel) {
 	_pixels[ y * _texWidth + x ] = pixel;
 }
 
-bool SaloonTexture::loadTexture(const char* fileName, GLuint filterMode) {
+bool Texture::loadTexture(const char* fileName, GLuint filterMode) {
 	_texture = glLoadTexture(fileName, _texWidth, _texHeight, filterMode);
 
 	return (_texture != 0);
 }
 
-void SaloonTexture::bind(uint unit) {
+void Texture::bind(uint unit) {
 
 	glActiveTexture(GL_TEXTURE0 + unit);
 	glBindTexture(GL_TEXTURE_2D, _texture);
 
 }
 
-void SaloonTexture::unbind() {
+void Texture::unbind() {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void SaloonTexture::render(GLfloat x, GLfloat y) const {
+void Texture::render(GLfloat x, GLfloat y) const {
 	glDrawTexture(_texture, x, y, _texWidth, _texHeight);
 }

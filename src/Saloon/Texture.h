@@ -10,7 +10,7 @@
 
 #include "glHelpers.h"
 
-class SaloonTexture {
+class Texture {
 private:
 	GLuint _texture;
 
@@ -18,8 +18,8 @@ private:
 	GLuint _texWidth, _texHeight;
 
 public:
-	SaloonTexture();
-	virtual ~SaloonTexture();
+	Texture();
+	virtual ~Texture();
 
 	void bind(uint unit=0);
 	void unbind();

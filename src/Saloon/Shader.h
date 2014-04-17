@@ -11,7 +11,7 @@
 #include "Saloon.h"
 #include "Transform.h"
 
-class SaloonShader {
+class Shader {
 private:
 	static const unsigned int NUM_SHADERS = 2;
 
@@ -27,8 +27,8 @@ private:
 	GLuint _uniforms[NUM_UNIFORMS];
 
 public:
-	SaloonShader();
-	virtual ~SaloonShader();
+	Shader();
+	virtual ~Shader();
 
 	void load(const string& fileName);
 	void bind();

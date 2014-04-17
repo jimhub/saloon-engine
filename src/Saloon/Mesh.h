@@ -23,7 +23,7 @@ public:
 	glm::vec2 texCoord;
 };
 
-class SaloonMesh {
+class Mesh {
 private:
 
 	enum
@@ -39,10 +39,12 @@ private:
 	uint _drawCount;
 
 public:
-	SaloonMesh(Vertex* verts, uint numVerts);
-	virtual ~SaloonMesh();
+	Mesh();
+	virtual ~Mesh();
 
+	void createFromVertices(Vertex* verts, uint numVerts);
 	void draw();
+	void free();
 };
 
 #endif /* SALOONMESH_H_ */
