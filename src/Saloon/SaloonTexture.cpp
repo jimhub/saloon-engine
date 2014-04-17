@@ -7,9 +7,12 @@
 
 #include "SaloonTexture.h"
 
-SaloonTexture::SaloonTexture(const char* fileName, GLuint filterMode) {
-	_texture = glLoadTexture(fileName, _texWidth, _texHeight, filterMode);
+SaloonTexture::SaloonTexture() {
+	_texture = 0;
 	_pixels = NULL;
+
+	_texWidth = 0;
+	_texHeight = 0;
 }
 
 SaloonTexture::~SaloonTexture() {
@@ -77,6 +80,23 @@ void SaloonTexture::freeTexture() {
 
 void SaloonTexture::setPixel(GLuint x, GLuint y, GLuint pixel) {
 	_pixels[ y * _texWidth + x ] = pixel;
+}
+
+bool SaloonTexture::loadTexture(const char* fileName, GLuint filterMode) {
+	_texture = glLoadTexture(fileName, _texWidth, _texHeight, filterMode);
+
+	return (_texture != 0);
+}
+
+void SaloonTexture::bind(uint unit) {
+
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glBindTexture(GL_TEXTURE_2D, _texture);
+
+}
+
+void SaloonTexture::unbind() {
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void SaloonTexture::render(GLfloat x, GLfloat y) const {

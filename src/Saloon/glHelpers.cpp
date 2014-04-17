@@ -383,3 +383,52 @@ GLuint glColorFloatsToInt(GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
 GLuint glColorToInt(const GLColor4& color) {
 	return glColorFloatsToInt(color.r, color.g, color.b, color.a);
 }
+
+void glCheckShaderError(GLuint shader, GLuint flag, bool isProgram,
+		const std::string& errorMsg) {
+
+	GLint success = 0;
+	GLchar error[1024] = { 0 };
+
+	if(isProgram) {
+		glGetProgramiv(shader, flag, &success);
+	}
+	else {
+		glGetShaderiv(shader, flag, &success);
+	}
+
+	if(success == GL_FALSE) {
+		if(isProgram) {
+			glGetProgramInfoLog(shader, sizeof(error), NULL, error);
+		}
+		else {
+			glGetShaderInfoLog(shader, sizeof(error), NULL, error);
+		}
+
+		printf("%s: %s\n", errorMsg.c_str(), error);
+	}
+}
+
+GLuint glCreateShaderFromText(const std::string& text, GLenum shaderType) {
+
+	GLuint shader = glCreateShader(shaderType);
+
+	if(shader == 0) {
+		printf("Error: Shader creation failed :(\n");
+		return 0;
+	}
+
+	const GLchar* srcStrings[1];
+	GLint srcStringLens[1];
+
+	srcStrings[0] = text.c_str();
+	srcStringLens[0] = text.length();
+
+	glShaderSource(shader, 1, srcStrings, srcStringLens);
+	glCompileShader(shader);
+
+	glCheckShaderError(shader, GL_COMPILE_STATUS, false, "Shader Compile Failed");
+
+
+	return shader;
+}

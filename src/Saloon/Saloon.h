@@ -14,6 +14,7 @@
 #include "Debug.h"
 #include "LTimer.h"
 
+#include "SaloonHelpers.h"
 #include "SaloonTexture.h"
 
 class Saloon {
@@ -53,6 +54,7 @@ public:
 	virtual void onCreate() {};
 	virtual void onUpdate() {};
 	virtual void onRender() {};
+	virtual void onDestroy() {};
 };
 
 #endif /* SALOON_H_ */

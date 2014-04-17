@@ -33,6 +33,14 @@ int Saloon::init(const char* title, int width, int height, bool windowed, int x,
 		return 1;
 	}
 
+	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
+
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
 	// Slight optimization to prepare the PNG loader prior to loading any images
 	if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG){
 		logSDLError(std::cout, "IMG_Init");
@@ -203,6 +211,8 @@ int Saloon::start() {
 			SDL_GL_SwapWindow(_window);
 
 		}
+
+		onDestroy();
 
 		glDestroy();
 

@@ -16,6 +16,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+#include <string>
+
 #define TWO_PI 6.283185307f
 #define PI 3.141592654f
 
@@ -104,5 +106,8 @@ GLuint glColorToInt(const GLColor4& color);
 
 void glPushStyle();
 void glPopStyle();
+
+void glCheckShaderError(GLuint shader, GLuint flag, bool isProgram, const std::string& errorMsg);
+GLuint glCreateShaderFromText(const std::string& text, GLenum shaderType);
 
 #endif /* GLHELPERS_H_ */

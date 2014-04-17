@@ -92,4 +92,5 @@ SDL_Texture* renderText(const std::string &message, TTF_Font* font,
 
 TTF_Font* loadFont(const std::string &fontFile, int fontSize);
 
+
 #endif /* SDLHELPERS_H_ */

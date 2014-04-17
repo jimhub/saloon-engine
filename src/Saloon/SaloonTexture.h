@@ -18,12 +18,16 @@ private:
 	GLuint _texWidth, _texHeight;
 
 public:
-	SaloonTexture(const char* fileName, GLuint filterMode=GL_NEAREST);
+	SaloonTexture();
 	virtual ~SaloonTexture();
+
+	void bind(uint unit=0);
+	void unbind();
 
 	bool lock();
 	bool unlock();
 
+	bool loadTexture(const char* fileName, GLuint filterMode=GL_NEAREST);
 	void freeTexture();
 
 	GLuint getPixel(GLuint x, GLuint y) const;
