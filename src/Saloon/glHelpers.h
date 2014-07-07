@@ -9,9 +9,16 @@
 #define GLHELPERS_H_
 
 #define GL_GLEXT_PROTOTYPES
-//#include <GL/glext.h>
 
+#ifdef __APPLE__
+#include <OpenGL/gl3.h>
+#include <OpenGL/gl.h>
+
+#include <OpenGL/glu.h>
+#include <OpenGL/glext.h>
+#else
 #include <GL/gl.h>
+#endif
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
